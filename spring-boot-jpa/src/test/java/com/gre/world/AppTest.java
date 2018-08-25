@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
- * Unit test for simple SpringBootJdbcApplication.
+ * Unit test for simple SpringBootJpaApplication.
  */
 public class AppTest 
 {

@@ -1,5 +1,7 @@
 package com.gre.world.jpa.entity;
 
+import com.gre.world.jpa.entity.listener.CreditCardListener;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,20 +12,24 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "credit_cards")
+@EntityListeners(CreditCardListener.class)
 public class CreditCard {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     @Column(length = 128)
     private String number;
     @Column(name = "registered_date")
     private Date registeredDate;
 
-    public long getId() {
+    @OneToOne(mappedBy = "creditCard")
+    private Customer customer;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -41,6 +47,24 @@ public class CreditCard {
 
     public void setRegisteredDate(Date registeredDate) {
         this.registeredDate = registeredDate;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    @Override
+    public String toString() {
+        return "CreditCard{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", registeredDate=" + registeredDate +
+                ", customer=" + customer +
+                '}';
     }
 }
 

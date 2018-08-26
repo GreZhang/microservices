@@ -1,6 +1,9 @@
 package com.gre.world.jpa.entity;
 
+import com.gre.world.jpa.entity.listener.CustomerListener;
+
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * @author 风骚的GRE
@@ -9,16 +12,21 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "customer")
+@EntityListeners(value = {CustomerListener.class})
 public class Customer {
     @Id
     @GeneratedValue
     private long id;// 注解
-    @Column(name = "name",length = 50)
+    @Column(length = 50)
     private String name;// 姓名
-    @Column(name = "age",length = 3)
-    private int age;// 年龄
-    @Column(name = "address",length = 256)
-    private String address;// 地址
+    @OneToOne
+    private CreditCard creditCard;
+
+    @ManyToOne
+    private Store store;
+
+    @ManyToMany
+    private Collection<Book> books;
 
     public long getId() {
         return id;
@@ -36,19 +44,38 @@ public class Customer {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public CreditCard getCreditCard() {
+        return creditCard;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
     }
 
-    public String getAddress() {
-        return address;
+    public Store getStore() {
+        return store;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public Collection<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Collection<Book> books) {
+        this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", creditCard=" + creditCard +
+                ", store=" + store +
+                ", books=" + books +
+                '}';
     }
 }
